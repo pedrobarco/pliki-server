@@ -17,3 +17,6 @@
 
 # Release artifacts
 dist/
+
+# Static served files
+files/

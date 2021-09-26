@@ -1,7 +1,8 @@
 BINDIR      := $(CURDIR)/bin
 DISTDIR      := $(CURDIR)/dist
 INSTALL_PATH ?= /usr/local/bin
-BINNAME     ?= pliki
+CLI_BINNAME  ?= pliki
+SERVER_BINNAME ?= pliki-server
 
 GOBIN         = $(shell go env GOBIN)
 ifeq ($(GOBIN),)
@@ -48,17 +49,21 @@ all: build
 #  build
 
 .PHONY: build
-build: $(BINDIR)/$(BINNAME)
+build: $(BINDIR)/$(SERVER_BINNAME) $(BINDIR)/$(CLI_BINNAME) 
 
-$(BINDIR)/$(BINNAME): $(SRC)
+$(BINDIR)/$(SERVER_BINNAME): $(SRC)
+	GO111MODULE=on go build $(GOFLAGS) -trimpath -tags '$(TAGS)' -ldflags '$(LDFLAGS)' -o '$(BINDIR)'/$(BINNAME) ./cmd/pliki-server
+
+$(BINDIR)/$(CLI_BINNAME): $(SRC)
 	GO111MODULE=on go build $(GOFLAGS) -trimpath -tags '$(TAGS)' -ldflags '$(LDFLAGS)' -o '$(BINDIR)'/$(BINNAME) ./cmd/pliki
+
 
 # ------------------------------------------------------------------------------
 #  install
 
 .PHONY: install
 install: build
-	@install "$(BINDIR)/$(BINNAME)" "$(INSTALL_PATH)/$(BINNAME)"
+	@install "$(BINDIR)/$(CLI_BINNAME)" "$(INSTALL_PATH)/$(CLI_BINNAME)"
 
 # ------------------------------------------------------------------------------
 #  test
