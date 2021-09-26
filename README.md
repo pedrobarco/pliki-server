@@ -32,8 +32,6 @@
   <a href="#license">License</a>
 </p>
 
-![screenshot](docs/assets/demo.gif)
-
 ## Key Features
 
 - [ ] upload/download files
