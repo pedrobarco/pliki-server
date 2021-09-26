@@ -1,0 +1,33 @@
+env:
+  - GO111MODULE=on
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - id: pk
+    main: ./cmd/pk
+    binary: pk
+    goos:
+      - linux
+    ldflags:
+      - -w -s
+      - -X prostokat/internal/version.version={{ trimprefix .Version "v" }}
+      - -X prostokat/internal/version.gitCommit={{ .Commit }}
+    env:
+      - GO386=softfloat
+      - CGO_ENABLE=0
+nfpms:
+  - homepage: https://github.com/pedrobarco/pliki-server
+    description: pliki-server is a temporary file storage server
+    maintainer: Pedro Barco <pedro.barco@tecnico.ulisboa.pt>
+    license: MIT
+    formats:
+      - apk
+      - deb
+      - rpm
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
