@@ -51,6 +51,9 @@ func uploadFileHandler(cfg *configs.Config) httprouter.Handle {
 			return
 		}
 
-		fmt.Fprintf(w, "http://localhost:8080/files/%s\n", fileName)
+		// TODO: check if http or https
+		furl := fmt.Sprintf("http://%s/files/%s", r.Host, fileName)
+
+		fmt.Fprint(w, furl)
 	}
 }
