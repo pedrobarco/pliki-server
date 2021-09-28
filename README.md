@@ -34,7 +34,7 @@
 
 ## Key Features
 
-- [ ] upload/download files
+- [x] upload/download files
 - [ ] control data lifecycles
 - [ ] apply file retention policies
 
